@@ -19,8 +19,7 @@ function PaintingsList({ paintings }) {
             spacing={10}
             direction="row"
           >
-            {
-              paintings.map(painting => (
+            {paintings.map(painting => (
                 <Grid key={painting.id} item xs={3}>
                   <Painting
                     key={painting.id}

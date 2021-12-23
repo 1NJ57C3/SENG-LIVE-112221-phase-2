@@ -1,6 +1,8 @@
 /* ❗ your code here */
+// import cards from "../cards"
+import Card from "./Card"
 
-function CardList(/* ❗ your code here */) {
+function CardList({cards}) {
 
     return (
         <div className="card-list">
@@ -8,8 +10,18 @@ function CardList(/* ❗ your code here */) {
             <br />
 
             {/* ❗ your code here */}
+            {cards.map(card => {
+                return (
+                    <Card 
+                        key={card.id}
+                        title={card.title}
+                        content={card.content}
+                    />
+                );
+            })}
         </div>
     );
 }
 
 /* ❗ your code here */
+export default CardList;

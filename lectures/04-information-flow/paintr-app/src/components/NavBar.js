@@ -1,4 +1,6 @@
-function NavBar({ color, icon, title, description }) {
+function NavBar({ color, icon, title, description, changeColor }) {
+// const makeBlue = () => changeColor('blue')
+
   return (
     <div className={`ui inverted ${color} menu`}>
       <button className="item">
@@ -10,7 +12,7 @@ function NavBar({ color, icon, title, description }) {
       </button>
 
       {/* Call changeColor() via onClick using props */}
-      <button className="ui button">Change Color</button>
+      <button onClick={changeColor} className="ui button">Change Color</button>
     </div>
   );
 };

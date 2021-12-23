@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+
+// './App' =>   relative path to App
 import App from './App';
+
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode> /* Used for debugging/omitted at this stage*/
+    // what to render
+    <App />,
+
+  // </React.StrictMode>,
+    // where to render
   document.getElementById('root')
 );
 

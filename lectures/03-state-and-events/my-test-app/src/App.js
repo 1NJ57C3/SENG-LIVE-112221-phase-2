@@ -9,6 +9,9 @@ import CardList from './components/CardList';
 // Data
 import cardData from './cards';
 
+// useState Import
+import { useState } from 'react';
+
 function App() {
 
   // Q: Why do we want to manage 'cards' state here?
@@ -18,6 +21,8 @@ function App() {
   //    component hierarchy. We have 'lifted' the cards
   //    state to a suitable / scalable position in the
   //    component hierarchy.
+  
+  const [ cards, setCards ] = useState(cardData);
 
   return (
     <div className="App">
@@ -32,7 +37,7 @@ function App() {
 
       {/* CardList Component */}
       <CardList 
-        cards={cardData} 
+        cards={cards} 
       />
     </div>
   );

@@ -31,9 +31,16 @@ import CardForm from './components/CardForm';
 function App() {
   // Set "cards" state + setter function
   const [ cards, setCards ] = useState([]);
-
-  // 🚧 Add states to manage POST (addCard), PATCH (removeCard), and DELETE (editCard)
+  
+  // 🚧 Add states to manage POST (addCard), PATCH (update/editCard), and DELETE (removeCard)
   // ❗ Why is setting state necessary?
+  const [ addCard, setAddCard ] = useState(false);
+  const [ removeCard, setRemoveCard ] = useState(false);
+  const [ editCard, setEditCard ] = useState(false);
+
+  // This state serves as a re-render trigger
+  const [ updateData, setUpdateData ] = useState(false);
+
   // ...
   // ...
   // ...
@@ -56,61 +63,76 @@ function App() {
     loadCards(); 
 
   // ❗ What states will we need to add to our dependencies array and why?
-  }, []);
+  // }, [addCard, removeCard, editCard]);
+  }, [updateData]);
 
   function handleAddCard(newCard) {
 
     // 🚧 Refactor handleAddCard() to handle POST
 
-    // fetch("http://localhost:3001/cards", {
-    //   method: "❓",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify(❓)
-    // }).then(
-    //      ❗ Remember to invoke loadCards() and toggle "addCard" state after successful fetch   
-    // })
-
-    // Avoid direct state mutation by using the Spread Operator
-    const newCardsArray = [...cards, newCard]
-
-    // Pass new array to "setState."
-    setCards(newCardsArray)
-  }
+    fetch("http://localhost:3001/cards", {
+      // method: "❓",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      // body: JSON.stringify(❓)
+      body: JSON.stringify(newCard)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        //  ❗ Remember to invoke loadCards() and toggle "addCard" state after successful fetch   
+        // setAddCard(!addCard);
+        setUpdateData(!updateData);
+      })
+      
+      // Avoid direct state mutation by using the Spread Operator
+      // const newCardsArray = [...cards, newCard]
+      
+      // Pass new array to "setState."
+      // setCards(newCardsArray)
+    }
+  
 
   // 🚧 Add function to handle DELETE (handleRemoveCard)
   // ❗ Remember to invoke loadCards() and toggle "removeCard" state after successful fetch
 
-  // function handleRemoveCard(card) {
-  //    fetch(`http://localhost:3001/cards/${❓}`, {
-  //      method: "❓",
-  //      headers: {
-  //        "Content-Type": "application/json"
-  //    }
-  //   }).then(
-  //     ❗ Remember to invoke loadCards() and toggle "addCard" state after successful fetch   
-  //   })
-  //  );
-  // }
+  function handleRemoveCard(card) {
+    //  fetch(`http://localhost:3001/cards/${❓}`, {
+     fetch(`http://localhost:3001/cards/${card.id}`, {
+      
+      //  method: "❓",
+       method: "DELETE",
+       headers: {
+         "Content-Type": "application/json"
+     }
+    }).then(
+      // ❗ Remember to invoke loadCards() and toggle "addCard" state after successful fetch   
+      // setRemoveCard(!removeCard);
+      setUpdateData(!updateData)
+    )};
 
   // 🚧 Add function to handle PATCH (handleEditCard)
   // ❗ Remember to invoke loadCards() and toggle "editCard" state after successful fetch
 
-    // function handleEditCard(card) {
-    //   fetch(`http://localhost:3001/cards/${❓}`, {
-    //     method: "❓",
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //       liked: ❓
-    //     })
-    //   }).then(
-    //       ❗ Remember to invoke loadCards() and toggle "editCard" state after successful fetch   
-    //   })
-    //  );
-    // }
+    function handleEditCard(card) {
+      // fetch(`http://localhost:3001/cards/${❓}`, {
+      fetch(`http://localhost:3001/cards/${card.id}`, {
+        // method: "❓",
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          // liked: ❓
+          liked: !card.liked
+        })
+      }).then(
+          // ❗ Remember to invoke loadCards() and toggle "editCard" state after successful fetch   
+          // setEditCard(!editCard);
+          setUpdateData(!updateData)
+      )};
 
   return (
     <div className="App">
@@ -131,8 +153,10 @@ function App() {
       {/* CardList Component */}
       <CardList 
         cards={cards}
-
+        
         // 🚧 Pass handleRemoveCard() and handleEditCard as props
+        handleRemoveCard={handleRemoveCard}
+        handleEditCard={handleEditCard}
       />
     </div>
   );

@@ -1,8 +1,9 @@
 // ✅ on line 2, import the useEffect hook along with the useState hook
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [pics, setPics] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // ✅ call the useEffect hook with a callback function and an empty array as a second argument
   // 👀 useEffect(() => {}, [])
@@ -10,8 +11,9 @@ function App() {
   // 📃 Check out the docs for an example: https://reactjs.org/docs/faq-ajax.html#example-using-ajax-results-to-set-local-state
 
   // 🗑 once your useEffect hook works, delete this function and also delete the <button> from the JSX
-  function handleFetchClick() {
-    console.log("Fetching data...");
+  // function handleFetchClick() {
+  //   console.log("Fetching data...");
+  useEffect(() => {
     fetch("https://dog.ceo/api/breeds/image/random/8")
       .then(res => res.json())
       .then(data => {
@@ -19,16 +21,17 @@ function App() {
         // data is an object with a key of message, which has an array of images
         // data.message => Array
         setPics(data.message);
+        setIsLoaded(true);
       });
-  }
+  }, [] )
 
   console.log("Component rendering");
 
   return (
     <div style={{ padding: "16px" }}>
       <h1>Dog Pics</h1>
-      <DogPics pics={pics} />
-      <button onClick={handleFetchClick}>Fetch!</button>
+      { isLoaded ? <DogPics pics={pics} /> : <h1>Loading...</h1>}
+      {/* <button onClick={handleFetchClick}>Fetch!</button> */}
     </div>
   );
 }

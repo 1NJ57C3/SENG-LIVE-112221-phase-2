@@ -26,7 +26,8 @@ function CardForm({ handleAddCard, cards }){
 
     // Create a callback function to handle onSubmit behavior for our controlled form
     function handleSubmit(event) {
-        let newId = parseInt(cards[cards.length - 1].id) + 1;
+        // let newId = parseInt(cards[cards.length - 1].id) + 1;
+        let newId = cards.length + 1; // Old code was problematic at zero cards
 
         // Prevent default form submission behavior
         event.preventDefault();

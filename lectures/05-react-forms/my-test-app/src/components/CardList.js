@@ -1,7 +1,7 @@
 import Card from './Card';
 
 // Will accept an array of Card objects as props
-function CardList({ cards}) {
+function CardList({ cards }) {
     // cards => props object
     // { cards } => props.cards
 

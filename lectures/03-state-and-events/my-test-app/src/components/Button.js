@@ -20,17 +20,32 @@ function Button({ name, toggleVisibility }) {
         if (toggleVisibility) { toggleVisibility() };
     }
 
+    const CartButton = ({toggleButton}) => (
+        <button className="button" onClick={toggleButton}>
+            { isToggled ? "Remove From Cart" : "Add to Cart" }
+        </button>
+    );
+
+    const LikeButton = ({toggleButton}) => (
+        <button className="button" onClick={toggleButton}>
+            { isToggled ? '❤️' : '♡' }
+        </button>
+    );
+   
+
     return (
         // <>...</> is shorthand for <React.Fragment></React.Fragment>
         <>
             {name === "cart" ? (
-                <button className="button" onClick={toggleButton}>
-                    { isToggled ? "Remove From Cart" : "Add to Cart" }
-                </button>
+                <CartButton toggleButton={toggleButton} />
+            //     <button className="button" onClick={toggleButton}>
+            //         { isToggled ? "Remove From Cart" : "Add to Cart" }
+            //     </button>
             ) : (
-                <button className="button" onClick={toggleButton}>
-                    { isToggled ? '❤️' : '♡' }
-                </button>
+                <LikeButton toggleButton={toggleButton} />
+            //     <button className="button" onClick={toggleButton}>
+            //         { isToggled ? '❤️' : '♡' }
+            //     </button>
             )}
         </>
     )    
